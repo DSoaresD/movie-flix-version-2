@@ -1,8 +1,10 @@
 package com.devsuperior.movieflix.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -30,15 +33,14 @@ public class User implements UserDetails, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String firstName;
-	private String lastName;
+	private String name;
 	
 	@Column(unique = true)
 	private String email;
 	
 	private String password;
 	
-	//quando forem poucos para carregar, pode-se usar o FETCHTYPE.EAGER(é uma exigencia do spring security tb)
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "tb_user_role",
@@ -46,14 +48,16 @@ public class User implements UserDetails, Serializable {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	
+	@OneToMany(mappedBy = "user")
+	private List<Review> reviews = new ArrayList<>();
+	
 	public User() {		
 	}
 
-	public User(Long id, String firstName, String lastName, String email, String password) {
+	public User(Long id, String firstName, String email, String password) {
 		super();
 		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = firstName;
 		this.email = email;
 		this.password = password;
 	}
@@ -66,20 +70,12 @@ public class User implements UserDetails, Serializable {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String firstName) {
+		this.name = firstName;
 	}
 
 	public String getEmail() {
@@ -100,6 +96,10 @@ public class User implements UserDetails, Serializable {
 		
 	public Set<Role> getRoles() {
 		return roles;
+	}
+		
+	public List<Review> getReviews() {
+		return reviews;
 	}
 
 	@Override
