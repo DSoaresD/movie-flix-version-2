@@ -1,9 +1,9 @@
 package com.devsuperior.movieflix.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +23,9 @@ public class Genre implements Serializable {
 	
 	private String name;
 
-	@OneToMany(mappedBy = "genre")
-	private List<Movie> movies = new ArrayList<>();
+	//retirado o mappedBy por causar "json could not write infinte recursion"
+	@OneToMany
+	private Set<Movie> movies = new HashSet<>();
 	
 	public Genre() {
 		
@@ -52,8 +53,8 @@ public class Genre implements Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "genre")
-	public List<Movie> getMovies() {
+	
+	public Set<Movie> getMovies() {
 		return movies;
 	}
 

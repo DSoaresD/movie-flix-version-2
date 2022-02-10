@@ -1,9 +1,9 @@
 package com.devsuperior.movieflix.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,19 +31,20 @@ public class Movie implements Serializable {
 	@Column(columnDefinition = "TEXT")
 	private String synopsis;
 	
+	
 	@ManyToOne
 	@JoinColumn(name = "genre_id")
 	private Genre genre;
 	
 	@OneToMany(mappedBy = "movie")
-	private List<Review> reviews = new ArrayList<>();
+	private Set<Review> reviews = new HashSet<>();
 	
 	public Movie() {
 		
 	}
 
 	public Movie(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Genre genre) {
-		super();
+		
 		this.id = id;
 		this.title = title;
 		this.subTitle = subTitle;
@@ -100,7 +101,7 @@ public class Movie implements Serializable {
 	public void setSynopsis(String synopsis) {
 		this.synopsis = synopsis;
 	}
-
+	
 	public Genre getGenre() {
 		return genre;
 	}
@@ -109,7 +110,7 @@ public class Movie implements Serializable {
 		this.genre = genre;
 	}
 
-	public List<Review> getReviews() {
+	public Set<Review> getReviews() {
 		return reviews;
 	}
 

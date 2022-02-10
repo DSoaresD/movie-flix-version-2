@@ -1,7 +1,9 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
@@ -21,6 +23,8 @@ public class UserDTO implements Serializable {
 	private String email;
 	
 	Set<RoleDTO> roles = new HashSet<>();
+	
+	List<ReviewDTO> reviews = new ArrayList<>();
 	
 	
 	public UserDTO() {		
@@ -56,7 +60,7 @@ public class UserDTO implements Serializable {
 		return name;
 	}
 
-	public void setFirstName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -71,6 +75,12 @@ public class UserDTO implements Serializable {
 	public Set<RoleDTO> getRoles() {
 		return roles;
 	}
+
+	public List<ReviewDTO> getReviews() {
+		return reviews;
+	}
+	
+	
 	
 	
 }
